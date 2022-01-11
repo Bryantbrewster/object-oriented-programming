@@ -1,0 +1,38 @@
+from question_model import Question
+from data import question_data
+from quiz_brain import QuizBrain
+
+# class Question:
+#     def __init__(self, text, answer):
+#         self.text = text
+#         self.answer = answer
+
+
+#Creating an empty list to use
+question_bank = []
+
+#iterate through the question_data list (which contains 12 dictionaries)
+for i in question_data:
+    #for each iteration (dictionary), assign what's contained in 'text' to the variable "question_text"
+    question_text = i['text']
+    #for each iteration (dictionary), assign what's contained in 'answer' to the variable "question_answer"
+    question_answer = i['answer']
+    #once the variables are created, create an object called 'question' using the Question() class. Pass in the data
+    #that was assigned as question_text and question_answer into the arguments to assign those strings as the question's
+    #text and answer for this iteration
+    question = Question(question_text, question_answer)
+    #Now that the object is created, add it to the question_bank list. Which will create & add 12 objects that
+    #will make up the list
+    question_bank.append(question)
+
+
+quiz = QuizBrain(question_bank)
+
+print(quiz.question_list)
+
+while quiz.still_has_questions() is True:
+    quiz.next_question()
+
+print("You've completed the quiz!")
+print(f"Your final score was: {quiz.score}/12")
+
