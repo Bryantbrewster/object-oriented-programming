@@ -1,0 +1,47 @@
+The for loop looks through the question_data list (which contains 12 dictionaries) 
+In each iteration (dictionary), it assigns what’s contained in ‘text’ to the variable question_text, then in each iteration (dictionary), it assigns what’s contained in ‘answer’ to the variable question_answer
+Once the variables are created, it creates an object called ‘question’, using the Question() class. It passes in the data that was assigned as question_text and question_answer into the arguments to assign those strings as the question’s text and answers for that iteration
+Now that the object is created, with question.text containing the text and question.answer containing the answer, it adds the object to the question_bank list, which was previously just an empty list I created
+
+So now we have:
+•	Question_bank: a list of 12 objects
+o	Each object currently has 2 attributes
+	Self.text: the question text
+	Self.answer: the question answer
+o	Each object can be called upon:
+	Print(question_bank[0])
+•	This prints the whole object
+	Print(question_bank[0].text)
+•	This prints the text (i.e. self.text) of the first object in the list
+
+Then, the ‘quiz’ object is created from the QuizBrain(self, question_list) class. 
+Quiz = QuizBrain(question_bank)
+The question_bank from the for loop, that contains the 12 objects (questions & their answers), is entered as the ‘question_list’ parameter
+class QuizBrain:
+    def __init__(self, question_list):
+        self.question_number = 0
+        self.question_list = question_list
+        self.score = 0
+
+The entire question_bank is then created as one large object, containing 12 smaller sub-objects (terminology probably not correct), 
+The default question number is assigned as zero
+The default score is assigned as zero
+The question_list attribute is set equal to itself (self.question_list = question_list)
+The next_question() method is created:
+def next_question(self):
+    current_question = self.question_list[self.question_number]
+    self.question_number += 1
+    user_answer = input(f'Q.{self.question_number}: {current_question.text} (True/False)?')
+    self.check_answer(user_answer, current_question.answer)
+
+This method creates a variable called current_question. It then uses self.question_list to talk to the ‘quiz’ object we created using the QuizBrain() class and call on the full list of questions. Self.question_number is added to specify which specific question we are looking for. So in this case: self.question_list[self.question_number] is really equal to question_bank[0], because question_bank is the OG question_list and self.question_number is equal to 0 because that was the default value in the class initializer.
+It then adds 1 to the self.question_number so that in the next go-around it will display question #1 instead of question #0 in the console, it will also make sure it keeps iterating through the question bank. 
+It then asks the user for their answer and  calls on self.question_number (displaying as question #1), current_question.text (current_question is the variable that was created at the start of the method)
+Because current_question was assigned to a specific object within the question_bank (through what was essentially question_bank[0]), then current_question is equal to the first item contained within the question_list, which is an object. 
+That object was created from the Question() class, which has attributes of self.text and self.answer
+The last line of the method invokes the check_answer(self, user_answer, correct_answer) method.
+This method checks to see if what was entered under user_answer is the same as what was entered under correct_answer
+User_answer is equal to what was entered in the next_question method, and correct_answer is equal to the current_question.answer  which calls on the ‘sub-object’ that is current_question
+This process all repeats, showing a question text attribute (sub-object of the quiz object), asking for a user answer, checking that answer against the answer attributes of the sub-object, if correct: add 1 to score (default attribute of the Quiz() class and ask the next question (sub-object of the overall quiz() object) (assuming there are still questions remaining), if wrong: tell them they’re wrong and move to the next question
+
+
